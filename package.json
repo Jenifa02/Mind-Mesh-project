@@ -1,0 +1,24 @@
+{
+  "name": "mind-mesh-project",
+  "version": "1.0.0",
+  "description": "A collaborative AI workspace combining project management, document-aware chat, and multi-agent task execution with real-time visual feedback.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jenifa02/Mind-Mesh-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Jenifa02/Mind-Mesh-project/issues"
+  },
+  "homepage": "https://github.com/Jenifa02/Mind-Mesh-project#readme",
+  "devDependencies": {
+    "concurrently": "^10.0.5"
+  }
+}
