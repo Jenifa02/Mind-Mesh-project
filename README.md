@@ -3,4 +3,3 @@ A collaborative AI workspace combining project management, document-aware chat, 
 
 
 npm install
-
