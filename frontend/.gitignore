@@ -1,8 +1,13 @@
-# Python cache
+# Python
 __pycache__/
 *.pyc
+.venv/
 
 # Environment
-.venv/
 .env
 .env.local
+
+# Node / Next.js
+node_modules/
+.next/
+next-env.d.ts
