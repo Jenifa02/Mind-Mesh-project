@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/client";
+
 const supabase = createClient();
+
 export default function DashboardPage() {
   const router = useRouter();
-  
 
   const [email, setEmail] = useState("");
 
@@ -27,10 +28,7 @@ export default function DashboardPage() {
     getUser();
   }, [router]);
 
-  // Logout function
   async function handleLogout() {
-
-  // Sign out and clear Supabase session
     const { error } = await supabase.auth.signOut();
 
     if (error) {
@@ -38,20 +36,15 @@ export default function DashboardPage() {
       return;
     }
 
-    // Redirect after successful logout
     router.replace("/login");
     router.refresh();
   }
 
- 
-
   return (
     <main className="min-h-screen bg-[#f8f9fc]">
-
       {/* Navbar */}
       <nav className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-10">
-
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-600 text-white">
               <span className="font-bold">M</span>
@@ -67,12 +60,14 @@ export default function DashboardPage() {
               <p className="text-sm font-semibold text-slate-800">
                 Welcome back
               </p>
+
               <p className="text-xs text-slate-500">
                 {email}
               </p>
             </div>
 
-            <button onClick={handleLogout}
+            <button
+              onClick={handleLogout}
               className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
             >
               Sign out
@@ -83,7 +78,6 @@ export default function DashboardPage() {
 
       {/* Dashboard */}
       <section className="mx-auto max-w-7xl px-6 py-12 lg:px-10">
-
         <div className="mb-10">
           <p className="text-sm font-bold uppercase tracking-wide text-indigo-600">
             Workspace
@@ -100,7 +94,6 @@ export default function DashboardPage() {
 
         {/* Cards */}
         <div className="grid gap-6 md:grid-cols-3">
-
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
             <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-xl">
               🧠
@@ -154,7 +147,6 @@ export default function DashboardPage() {
               Explore AI →
             </button>
           </div>
-
         </div>
 
         {/* Welcome Card */}
@@ -168,15 +160,14 @@ export default function DashboardPage() {
           </h2>
 
           <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">
-            Start a project, upload a document, or invite your
-            teammates to begin collaborating.
+            Start a project, upload a document, or invite your teammates to
+            begin collaborating.
           </p>
 
           <button className="mt-6 rounded-xl bg-indigo-500 px-5 py-3 text-sm font-bold text-white transition hover:bg-indigo-400">
             Create your first project
           </button>
         </div>
-
       </section>
     </main>
   );
