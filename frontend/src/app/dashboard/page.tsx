@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/client";
+import { apiFetch } from "@/utils/api";
 
 const supabase = createClient();
 
@@ -23,6 +24,25 @@ export default function DashboardPage() {
       }
 
       setEmail(user.email ?? "");
+
+      // Get JWT access token
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      console.log("JWT TOKEN:", session?.access_token);
+
+      // Send JWT token to FastAPI
+      const response = await apiFetch("/me");
+
+      if (!response.ok) {
+        console.error("FastAPI authentication failed:", response.status);
+        return;
+      }
+
+      const data = await response.json();
+
+      console.log("FastAPI response:", data);
     }
 
     getUser();
