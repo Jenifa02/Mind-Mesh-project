@@ -7,7 +7,11 @@ authors = [
     { name = "abinivesh-dev", email = "abiniveshshanmugavel@gmail.com" }
 ]
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "pyjwt[crypto]>=2.15.1",
+    "python-dotenv>=1.2.4",
+    "python-jose>=3.5.0",
+]
 
 [project.scripts]
 backend = "backend:main"
