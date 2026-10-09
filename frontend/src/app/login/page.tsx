@@ -225,3 +225,21 @@ export default function LoginPage() {
     </main>
   );
 }
+
+
+// 'use client'
+// import { createClient } from '@/utils/supabase/client'
+// export default function LoginPage() {
+//   const supabase = createClient()
+//   const signIn = () => supabase.auth.signInWithOAuth({
+//     provider: 'github',
+//     options: { redirectTo: `${window.location.origin}/auth/callback` },
+//   })
+//   return (
+//     <main className="grid min-h-screen place-items-center">
+//       <button onClick={signIn} className="rounded-lg bg-slate-900 px-5 py-3 text-white">
+//         Continue with GitHub
+//       </button>
+//     </main>
+//   )
+// }
