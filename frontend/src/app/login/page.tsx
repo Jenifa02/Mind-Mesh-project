@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "../../../lib/client";
-
+import GoogleButton from "./google-button";
 const supabase = createClient();
 
 export default function LoginPage() {
@@ -220,6 +220,13 @@ export default function LoginPage() {
             </button>
           </p>
 
+          {/* Google Button */}
+          <div className="mt-6">
+            <div className="mb-3 text-center text-sm text-slate-500">
+              <p>Or sign in with</p>
+            </div>
+            <GoogleButton />
+          </div>
         </div>
       </section>
     </main>

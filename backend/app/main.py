@@ -1,9 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from app.routes.user import router as users_router
 from app.config.settings import settings
 from fastapi.middleware.cors import CORSMiddleware
+from app.dependencies.auth import get_current_user
 
-app = FastAPI(title=settings.app_name)
+app = FastAPI(title=settings.supabase_url)
 
 origins = [
     "http://localhost:3000",
@@ -28,6 +29,13 @@ app.include_router(users_router)
 def home():
     return {"msg": "backend start"}
 
+@app.get("/me")
+def me(user: dict = Depends(get_current_user)):
+    return {
+        "id": user["id"],
+        "email": user["email"],
+    }
+
 
 @app.get("/ping")
 def ping():
@@ -41,4 +49,12 @@ def ping():
 def health():
     return {
         "status": "healthy",
+    }
+    
+
+@app.get("/auth/me")
+async def get_me(user: dict = Depends(get_current_user)):
+    return {
+        "id": user["id"],
+        "email": user.get("email"),
     }
