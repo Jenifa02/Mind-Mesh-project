@@ -19,5 +19,5 @@ def get_current_user_route(user: dict = Depends(get_current_user)):
     return {
         "message": "JWT verified successfully",
         "user_id": user["id"],
-        "email": user["email"],
+        "email": user.get("email"),
     }

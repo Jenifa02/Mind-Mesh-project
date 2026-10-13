@@ -128,7 +128,7 @@ export default function DashboardPage() {
             </p>
 
             <button 
-              onClick={() => router.push('/Projects')}
+              onClick={() => router.push('/projects')}
               className="mt-5 text-sm font-bold text-indigo-600 hover:text-indigo-700"
             >
               View projects →
@@ -188,7 +188,7 @@ export default function DashboardPage() {
           </p>
 
           <button 
-            onClick={() => router.push('/Projects')}
+            onClick={() => router.push('/projects')}
             className="mt-6 rounded-xl bg-indigo-500 px-5 py-3 text-sm font-bold text-white transition hover:bg-indigo-400"
           >
             Create your first project

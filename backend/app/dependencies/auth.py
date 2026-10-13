@@ -68,6 +68,5 @@ async def get_current_user(
     return {
         "id": user["id"],
         "email": user.get("email"),
-        "user_metadata": user.get("user_metadata", {}),
+        "access_token": token,
     }
-
