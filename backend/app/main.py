@@ -3,6 +3,7 @@ from app.routes.user import router as users_router
 from app.config.settings import settings
 from fastapi.middleware.cors import CORSMiddleware
 from app.dependencies.auth import get_current_user
+from app.routes.project import router as projects_router
 
 app = FastAPI(title=settings.supabase_url)
 
@@ -12,7 +13,7 @@ origins = [
 
 
 ]
-# CORS config
+# CORS confi
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -23,6 +24,7 @@ app.add_middleware(
 
 # Users router
 app.include_router(users_router)
+app.include_router(projects_router)
 
 
 @app.get("/")
