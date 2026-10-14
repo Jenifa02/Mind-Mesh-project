@@ -11,6 +11,7 @@ import {
 } from "../../lib/api";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
+import { BottleWineIcon } from "lucide-react";
 
 const supabase = createClient();
 
@@ -388,6 +389,14 @@ export default function ProjectsPage() {
                           ? "Deleting..."
                           : "Delete"}
                       </button>
+                      <button
+                        onClick={() => router.push(`/projects/${project.id}`)}
+                        className="rounded-lg bg-indigo-600 px-3 py-2 text-sm text-white"
+                        >
+                          View Details
+                        </button>
+
+                      
                     </div>
                   </div>
                 </article>
