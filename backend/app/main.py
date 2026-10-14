@@ -18,7 +18,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
@@ -35,7 +35,7 @@ def home():
 def me(user: dict = Depends(get_current_user)):
     return {
         "id": user["id"],
-        "email": user["email"],
+        "email": user.get("email"),
     }
 
 
@@ -51,4 +51,12 @@ def ping():
 def health():
     return {
         "status": "healthy",
+    }
+    
+
+@app.get("/auth/me")
+async def get_me(user: dict = Depends(get_current_user)):
+    return {
+        "id": user["id"],
+        "email": user.get("email"),
     }

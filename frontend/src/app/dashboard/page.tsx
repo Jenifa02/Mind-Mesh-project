@@ -127,7 +127,10 @@ export default function DashboardPage() {
               Organize and manage your collaborative projects.
             </p>
 
-            <button className="mt-5 text-sm font-bold text-indigo-600 hover:text-indigo-700">
+            <button 
+              onClick={() => router.push('/projects')}
+              className="mt-5 text-sm font-bold text-indigo-600 hover:text-indigo-700"
+            >
               View projects →
             </button>
           </div>
@@ -184,7 +187,10 @@ export default function DashboardPage() {
             begin collaborating.
           </p>
 
-          <button className="mt-6 rounded-xl bg-indigo-500 px-5 py-3 text-sm font-bold text-white transition hover:bg-indigo-400">
+          <button 
+            onClick={() => router.push('/projects')}
+            className="mt-6 rounded-xl bg-indigo-500 px-5 py-3 text-sm font-bold text-white transition hover:bg-indigo-400"
+          >
             Create your first project
           </button>
         </div>
