@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { createClient } from "@/utils/supabase/client";
+import { apiFetch } from "../../../lib/api";
 import type { Project } from "../../../lib/api";
 
 export default function ProjectDetailsPage() {
@@ -18,47 +18,20 @@ export default function ProjectDetailsPage() {
     let active = true;
 
     async function fetchProject() {
-      try {
-        const {
-          data: { session },
-          error: authError,
-        } = await createClient().auth.getSession();
+     try {
+      const response = await apiFetch(`/projects/${id}`, {
+        cache: "no-store",
+      });
 
-        if (authError) throw authError;
+      if (!response.ok) {
+        const message = await response.text();
+        throw new Error(message || "Failed to load project.");
+      }
 
-        if (!session) {
-          router.replace("/login");
-          return;
-        }
+      const data: Project = await response.json();
 
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      if (active) setProject(data);
 
-        if (!apiUrl) {
-          throw new Error("Backend API URL is missing.");
-        }
-
-        const response = await fetch(
-          `${apiUrl}/projects/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${session.access_token}`,
-            },
-            cache: "no-store",
-          }
-        );
-
-        if (!response.ok) {
-          const message = await response.text();
-          console.log("Status:", response.status);
-          console.log("Error:", message);
-          throw new Error(message);
-        }
-
-        
-
-        const data: Project = await response.json();
-
-        if (active) setProject(data);
       } catch (err) {
         if (active) {
           setError(
