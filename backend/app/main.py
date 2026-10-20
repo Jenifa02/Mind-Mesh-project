@@ -3,6 +3,7 @@ from app.routes.user import router as users_router
 from app.config.settings import settings
 from fastapi.middleware.cors import CORSMiddleware
 from app.dependencies.auth import get_current_user
+from app.routes.project import router as projects_router
 
 app = FastAPI(title=settings.supabase_url)
 
@@ -12,17 +13,18 @@ origins = [
 
 
 ]
-# CORS config
+# CORS confi
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # Users router
 app.include_router(users_router)
+app.include_router(projects_router)
 
 
 @app.get("/")
@@ -33,7 +35,7 @@ def home():
 def me(user: dict = Depends(get_current_user)):
     return {
         "id": user["id"],
-        "email": user["email"],
+        "email": user.get("email"),
     }
 
 
@@ -49,4 +51,12 @@ def ping():
 def health():
     return {
         "status": "healthy",
+    }
+    
+
+@app.get("/auth/me")
+async def get_me(user: dict = Depends(get_current_user)):
+    return {
+        "id": user["id"],
+        "email": user.get("email"),
     }
