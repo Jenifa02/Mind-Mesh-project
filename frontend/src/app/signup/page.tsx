@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "../../../lib/client";
+import { createClient } from "@/lib/client";
 
 const supabase = createClient();
 
