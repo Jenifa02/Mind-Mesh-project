@@ -41,6 +41,23 @@ export default function LoginPage() {
     setLoading(false);
   };
 
+  const handleGoogleSignIn = async () => {
+    setError("");
+    setLoading(true);
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+
+    if (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
+
    return (
     <main className="min-h-screen grid lg:grid-cols-2 bg-white">
 
@@ -87,7 +104,7 @@ export default function LoginPage() {
         {/* Footer */}
         <div className="relative flex items-center justify-between">
           <p className="text-sm text-slate-500">
-            A clearer way to move your best work forward.
+           A clearer way to move your best work forward.
           </p>
 
           <div className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-black/20 text-xs">
@@ -219,9 +236,66 @@ export default function LoginPage() {
               Create an account
             </button>
           </p>
+            
+          <div className="mt-6">
+            <button
+              type="button"
+              onClick={handleGoogleSignIn}
+              className="group flex w-full items-center justify-center gap-3
+                rounded-xl border border-slate-200 bg-white px-5 py-3.5
+                text-sm font-semibold text-slate-700
+                shadow-sm transition-all duration-200
+                hover:-translate-y-0.5 hover:border-slate-300
+                hover:bg-slate-50 hover:shadow-md
+                focus:outline-none focus:ring-4 focus:ring-blue-100
+                active:translate-y-0"
+            >
+              <svg
+                className="h-5 w-5 transition-transform duration-200 group-hover:scale-110"
+                viewBox="0 0 48 48"
+                aria-hidden="true"
+              >
+                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 3.05 13.22l7.98 6.19C12.73 13.72 17.9 9.5 24 9.5Z" transform="translate(0 4)"/>
+                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.76 7.18l7.73 6C44.42 37.96 46.98 31.86 46.98 24.55Z" transform="translate(0 0)"/>
+                <path fill="#FBBC05" d="M10.03 28.59a14.4 14.4 0 0 1 0-9.18l-7.98-6.19a24 24 0 0 0 0 21.56l7.98-6.19Z" transform="translate(0 4)"/>
+                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.91-5.8l-7.73-6c-2.14 1.44-4.89 2.3-8.18 2.3-6.1 0-11.27-4.22-12.97-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48Z" transform="translate(0 -4)"/>
+              </svg>
 
+              <span>Continue with Google</span>
+
+              <svg
+                className="ml-auto h-4 w-4 text-slate-400 transition-transform group-hover:translate-x-1"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+                aria-hidden="true"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-7-7 7 7-7 7" />
+              </svg>
+            </button>
+          </div>
         </div>
       </section>
     </main>
   );
 }
+
+
+// 'use client'
+// import { createClient } from '@/utils/supabase/client'
+// export default function LoginPage() {
+//   const supabase = createClient()
+//   const signIn = () => supabase.auth.signInWithOAuth({
+//     provider: 'github',
+//     options: { redirectTo: `${window.location.origin}/auth/callback` },
+//   })
+//   return (
+//     <main className="grid min-h-screen place-items-center">
+//       <button onClick={signIn} className="rounded-lg bg-slate-900 px-5 py-3 text-white">
+//         Continue with GitHub
+//       </button>
+//     </main>
+//   )
+// }
+
