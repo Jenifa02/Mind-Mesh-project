@@ -1,79 +1,16 @@
-name: Mind-Mesh CI
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
-jobs:
-  frontend:
-    name: Frontend Build
-    runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: frontend
-
-    env:
-      NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: dummy-ci-anon-key-not-a-real-secret
-      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: dummy-ci-publishable-key-not-a-real-secret
-      NEXT_PUBLIC_API_URL: http://127.0.0.1:8000
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: frontend/package-lock.json
-
-      - name: Install frontend dependencies
-        run: npm ci
-
-      - name: Build frontend
-        run: npm run build
-
-  backend:
-    name: Backend Validation
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - name: Setup uv
-        uses: astral-sh/setup-uv@v6
-
-      - name: Install backend dependencies
-        run: uv sync --directory backend
-
-      - name: Validate Python code
-        run: uv run --directory backend python -m compileall -q app
-
-
 # name: Mind-Mesh CI
 
 # on:
-#   push:n
-#     branches: [main]
+#   push:
+#     branches:
+#       - main
 #   pull_request:
-#     branches: [main]
+#     branches:
+#       - main
 
 # jobs:
 #   frontend:
-#     name: Frontend Quality Check
+#     name: Frontend Build
 #     runs-on: ubuntu-latest
 
 #     defaults:
@@ -82,12 +19,12 @@ jobs:
 
 #     env:
 #       NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
-#       NEXT_PUBLIC_SUPABASE_ANON_KEY: dummy-ci-anon-key
-#       NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: dummy-ci-publishable-key
+#       NEXT_PUBLIC_SUPABASE_ANON_KEY: dummy-ci-anon-key-not-a-real-secret
+#       NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: dummy-ci-publishable-key-not-a-real-secret
 #       NEXT_PUBLIC_API_URL: http://127.0.0.1:8000
 
 #     steps:
-#       - name: Checkout repository
+#       - name: Checkout code
 #         uses: actions/checkout@v4
 
 #       - name: Setup Node.js
@@ -97,21 +34,18 @@ jobs:
 #           cache: npm
 #           cache-dependency-path: frontend/package-lock.json
 
-#       - name: Install dependencies
+#       - name: Install frontend dependencies
 #         run: npm ci
-
-#       - name: Check frontend lint
-#         run: npm run lint --if-present
 
 #       - name: Build frontend
 #         run: npm run build
 
 #   backend:
-#     name: Backend Quality Check
+#     name: Backend Validation
 #     runs-on: ubuntu-latest
 
 #     steps:
-#       - name: Checkout repository
+#       - name: Checkout code
 #         uses: actions/checkout@v4
 
 #       - name: Setup Python
@@ -125,5 +59,76 @@ jobs:
 #       - name: Install backend dependencies
 #         run: uv sync --directory backend
 
-#       - name: Check Python syntax
+#       - name: Validate Python code
 #         run: uv run --directory backend python -m compileall -q app
+
+
+name: Mind-Mesh CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  frontend:
+    name: Frontend - Lint and Build
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: frontend
+
+    env:
+      NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: dummy-publishable-key
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: dummy-anon-key
+      NEXT_PUBLIC_API_URL: http://127.0.0.1:8000
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Build frontend
+        run: npm run build
+
+  backend:
+    name: Backend - Pytest
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install dependencies
+        run: uv sync --directory backend --extra dev
+
+      - name: Run pytest
+        run: uv run --directory backend pytest
