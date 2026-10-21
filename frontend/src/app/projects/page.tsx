@@ -30,50 +30,64 @@ export default function ProjectsPage() {
   const loadProjects = useCallback(async () => {
     try {
       setError("");
+      await new Promise((resolve) => setTimeout(resolve, 3000));
       const result = await getProjects();
       setProjects(result);
-    } catch (err) {
+     } catch (err) {
+    const message = err instanceof Error ? err.message : "";
+
+    if (
+      message.toLowerCase().includes("failed to fetch") ||
+      message.toLowerCase().includes("fetch failed") ||
+      message.toLowerCase().includes("networkerror")
+    ) {
       setError(
-        err instanceof Error ? err.message : "Could not load projects"
+        "Unable to connect to the server. Please check your connection and try again."
       );
-    } finally {
-      setLoading(false);
+    } else {
+      setError(
+        message || "Unable to load projects. Please try again."
+      );
     }
-  }, []);
+  } finally {
+    setLoading(false);
+  }
+}, []);
 
   useEffect(() => {
-    let active = true;
+  let active = true;
 
-    async function initialize() {
-      try {
-        const {
-          data: { session },
-          error: authError,
-        } = await supabase.auth.getSession();
+  async function initialize() {
+    try {
+      const {
+        data: { session },
+        error: authError,
+      } = await supabase.auth.getSession();
 
-        if (!active) return;
+      if (!active) return;
 
-        if (authError || !session) {
-          router.replace("/login");
-          return;
-        }
+      if (authError || !session) {
+        router.replace("/login");
+        return;
+      }
 
-        await loadProjects();
-      } catch {
-        if (active) {
-          setError("Unable to initialize projects.");
-          setLoading(false);
-        }
+      await loadProjects();
+    } catch {
+      if (active) {
+        setError(
+          "Unable to verify your session. Please refresh the page and try again."
+        );
+        setLoading(false);
       }
     }
+  }
 
-    void initialize();
+  void initialize();
 
-    return () => {
-      active = false;
-    };
-  }, [loadProjects, router]);
-
+  return () => {
+    active = false;
+  };
+}, [loadProjects, router]);
   function resetForm() {
     setTitle("");
     setDescription("");
