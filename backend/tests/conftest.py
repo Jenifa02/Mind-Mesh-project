@@ -1,6 +1,6 @@
 
-import pytest  # type: ignore[reportMissingImports]
-from fastapi.testclient import TestClient  # type: ignore[reportMissingImports]
+import pytest
+import fastapi.testclient
 
 
 from app.main import app
@@ -8,7 +8,7 @@ from app.main import app
 
 @pytest.fixture
 def client():
-    with TestClient(app) as test_client:
+    with fastapi.testclient.TestClient(app) as test_client:
         yield test_client
         
       

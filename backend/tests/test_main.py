@@ -1,8 +1,8 @@
 
-from fastapi.testclient import TestClient  # pyright: ignore[reportMissingImports]
+import fastapi.testclient
 from app.main import app
 
-client = TestClient(app)
+client = fastapi.testclient.TestClient(app)
 
 
 def test_home():
