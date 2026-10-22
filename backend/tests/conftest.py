@@ -1,6 +1,7 @@
 
-import pytest
-from fastapi.testclient import TestClient
+import pytest  # type: ignore[reportMissingImports]
+from fastapi.testclient import TestClient  # type: ignore[reportMissingImports]
+
 
 from app.main import app
 
@@ -9,5 +10,6 @@ from app.main import app
 def client():
     with TestClient(app) as test_client:
         yield test_client
-
+        
+      
 
