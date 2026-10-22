@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/client";
-import { apiFetch } from "@/utils/api";
+import { apiFetch } from "@/lib/api";
 
 const supabase = createClient();
 

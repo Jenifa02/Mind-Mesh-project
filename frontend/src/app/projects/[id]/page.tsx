@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { createClient } from "@/lib/client";
-import type { Project } from "../../../lib/api";
+import type { Project } from "@/lib/api";
 
 const supabase = createClient();
 

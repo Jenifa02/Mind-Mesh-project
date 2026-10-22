@@ -8,8 +8,8 @@ import {
   getProjects,
   updateProject,
   type Project,
-} from "../..//lib/api";
-import { createClient } from "@/utils/supabase/client";
+} from "@/lib/api";
+import { createClient } from "@/lib/client";
 import { useRouter } from "next/navigation";
 
 const supabase = createClient();

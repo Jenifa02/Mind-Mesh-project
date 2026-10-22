@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/lib/client";
 
 export default function GoogleButton() {
   const [loading, setLoading] = useState(false);
