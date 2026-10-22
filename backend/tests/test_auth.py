@@ -15,7 +15,7 @@ def test_me_with_malformed_token_returns_401(client):
 
 
 def test_me_with_invalid_jwt_returns_401(client, monkeypatch):
-    import httpx
+    import httpx  
 
     async def mock_get(*args, **kwargs):
         return httpx.Response(
