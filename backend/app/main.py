@@ -7,12 +7,13 @@ from app.routes.project import router as projects_router
 
 app = FastAPI(title=settings.supabase_url)
 
+
 origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-
-
+    "https://mind-mesh-project-ten.vercel.app",
 ]
+
 # CORS confi
 app.add_middleware(
     CORSMiddleware,
