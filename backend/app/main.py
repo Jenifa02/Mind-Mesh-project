@@ -11,7 +11,7 @@ app = FastAPI(title=settings.supabase_url)
 origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "https://mind-mesh-project-ten.vercel.app",
+    "https://mind-mesh-project-j5ng.vercel.app",
 ]
 
 # CORS confi
